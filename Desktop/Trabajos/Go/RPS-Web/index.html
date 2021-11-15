@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>RPS</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class = "mt-4">Piedra, papel o Tijera</h1> 
+        <hr>
+
+        <p id="player_choice">&nbsp</p>
+        <p id="computer_choice">&nbsp</p>
+        <p class ="text-danger" id="round_result">&nbsp</p>
+        <p id="texto_extra">&nbsp</p>
+        <p>Elegi piedra, papel o tijera!    </p>
+        <br>
+        <br>
+        <button class = "btn btn-outline-primary" onclick = "choose(0);">Piedra</button>
+        <button class = "btn btn-outline-primary" onclick = "choose(1);">Papel</button>
+        <button class = "btn btn-outline-primary" onclick = "choose(2);">Tijera</button>
+    </div>
+
+
+    
+</body>
+<script>
+    function choose(x){
+
+        fetch("/play?c=" + x) //Desde la web buscamos info sin relodear la pag, el signo ? es parametro de url que agrega info extra 
+        .then(response => response.json())
+        .then(data => {
+            if (x == 0){
+            document.getElementById ("player_choice").innerHTML = "Elegiste ROCA";
+            } else if (x == 1){
+            document.getElementById ("player_choice").innerHTML = "Elegiste PAPEL";
+            } else{
+            document.getElementById ("player_choice").innerHTML = "Elegiste TIJERA";
+        }
+            document.getElementById("computer_choice").innerHTML = data.computer_choice;
+            document.getElementById("round_result").innerHTML = data.round_result;
+            document.getElementById("texto_extra").innerHTML = data.winner;
+        })
+
+
+       
+
+        
+
+    }
+</script>
+</html>
